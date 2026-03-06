@@ -1,13 +1,17 @@
 import * as React from "react";
 import type { DawaAddress } from "../services/dawa";
 import { searchAddress } from "../services/dawa";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 interface AddressSearchProps {
   onSelect: (coords: [number, number], address: string) => void;
+  onClear?: () => void;
 }
 
-export const AddressSearch: React.FC<AddressSearchProps> = ({ onSelect }) => {
+export const AddressSearch: React.FC<AddressSearchProps> = ({
+  onSelect,
+  onClear,
+}) => {
   const [query, setQuery] = React.useState("");
   const [results, setResults] = React.useState<DawaAddress[]>([]);
   const [isOpen, setIsOpen] = React.useState(false);
@@ -43,7 +47,7 @@ export const AddressSearch: React.FC<AddressSearchProps> = ({ onSelect }) => {
       <div className="relative">
         <input
           type="text"
-          className="w-full p-4 pl-12 rounded-xl border border-white/50 bg-white/90 backdrop-blur-sm text-gray-900 placeholder:text-gray-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+          className="w-full p-4 pl-12 pr-12 rounded-xl border border-white/50 bg-white/90 backdrop-blur-sm text-gray-900 placeholder:text-gray-500 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
           placeholder="Indtast din adresse..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -53,6 +57,21 @@ export const AddressSearch: React.FC<AddressSearchProps> = ({ onSelect }) => {
           className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
           size={20}
         />
+        {query.length > 0 && (
+          <button
+            type="button"
+            aria-label="Ryd adresse"
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-700 transition-colors"
+            onClick={() => {
+              setQuery("");
+              setResults([]);
+              setIsOpen(false);
+              onClear?.();
+            }}
+          >
+            <X size={18} />
+          </button>
+        )}
       </div>
 
       {isOpen && results.length > 0 && (

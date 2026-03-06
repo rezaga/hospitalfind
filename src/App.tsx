@@ -63,6 +63,12 @@ function App() {
     setUserLocation(coords);
   };
 
+  const handleAddressClear = () => {
+    setUserLocation(null);
+    setSelectedHospital(null);
+    setRouteGeometry(null);
+  };
+
   const handleHospitalHover = async (hospital: Hospital | null) => {
     if (!hospital || !userLocation) {
       setRouteGeometry(null);
@@ -110,14 +116,17 @@ function App() {
               </h1>
             </div>
             <p className="text-gray-600 text-sm">
-              Indtast din adresse og vælg en undersøgelse for at finde det rette
+              Indtast en adresse og vælg en undersøgelse for at finde det rette
               hospital.
             </p>
           </div>
 
           {/* Controls */}
           <div className="space-y-4">
-            <AddressSearch onSelect={handleAddressSelect} />
+            <AddressSearch
+              onSelect={handleAddressSelect}
+              onClear={handleAddressClear}
+            />
             <SpecialtySelect
               selected={selectedSpecialty}
               onSelect={setSelectedSpecialty}
