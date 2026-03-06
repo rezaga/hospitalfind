@@ -106,7 +106,7 @@ function App() {
                 <Activity size={24} />
               </div>
               <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-500">
-                Hospital Finder
+                CareRoutes
               </h1>
             </div>
             <p className="text-gray-600 text-sm">
